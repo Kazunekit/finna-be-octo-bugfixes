@@ -11,7 +11,7 @@ if ON_OPENSHIFT:
 	DEBUG = False
 else:
 	DEBUG = True
-DEBUG = True
+#DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
 AUTH_USER_MODEL = 'votes.User'
@@ -55,7 +55,7 @@ else:
 # Hosts/domain names that are valid for this site; required if DEBUG is False
 # See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
 ALLOWED_HOSTS = [
-#	 os.environ.get('OPENSHIFT_GEAR_DNS'),
+	 os.environ.get('OPENSHIFT_GEAR_DNS'),
 ]
 
 # Local time zone for this installation. Choices can be found here:
