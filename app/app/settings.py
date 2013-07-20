@@ -11,7 +11,7 @@ if ON_OPENSHIFT:
 	DEBUG = False
 else:
 	DEBUG = True
-DEBUG = True
+#DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
 AUTH_USER_MODEL = 'votes.User'
