@@ -19,5 +19,12 @@ source $OPENSHIFT_DATA_DIR/virtualenv/bin/activate
 mkdir -p $OPENSHIFT_DATA_DIR/configs
 mkdir -p $OPENSHIFT_DATA_DIR/static/static
 mkdir -p $OPENSHIFT_DATA_DIR/static/media
+
+echo "Executing 'python ${OPENSHIFT_DATA_DIR}app/manage.py syncdb"
+python "$OPENSHIFT_DATA_DIR"app/manage.py syncdb
+ 
+echo "Executing 'python ${OPENSHIFT_DATA_DIR}app/manage.py collectstatic --noinput -v0'"
+python "$OPENSHIFT_DATA_DIR"app/manage.py collectstatic --noinput -v0
+
 substitute_variables $OPENSHIFT_REPO_DIR/configs/nginx.conf $OPENSHIFT_DATA_DIR/nginx/conf/nginx.conf
 substitute_variables $OPENSHIFT_REPO_DIR/configs/uwsgi.yaml $OPENSHIFT_DATA_DIR/configs/uwsgi.yaml
