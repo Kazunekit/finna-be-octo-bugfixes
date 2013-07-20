@@ -21,7 +21,7 @@ mkdir -p $OPENSHIFT_DATA_DIR/static/static
 mkdir -p $OPENSHIFT_DATA_DIR/static/media
 
 echo "Executing 'python ${OPENSHIFT_REPO_DIR}app/manage.py syncdb"
-python "$OPENSHIFT_REPO_DIR"app/manage.py syncdb
+python "$OPENSHIFT_REPO_DIR"app/manage.py syncdb --noinput
  
 echo "Executing 'python ${OPENSHIFT_REPO_DIR}app/manage.py collectstatic --noinput -v0'"
 python "$OPENSHIFT_REPO_DIR"app/manage.py collectstatic --noinput -v0
