@@ -4,7 +4,7 @@ from django.utils.timezone import utc
 
 from datetime import datetime
 
-from voting import settings
+from app import settings
 # Create your models here.
 
 class UserManager(BaseUserManager):
