@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+{% load crispy_forms_tags %}
+{% block content %}
+<form method="post" action="{% url 'userEdit' id=user.id %}">
+    {% crispy form %}
+</form>
+<div class="accordion" id="accordion">
+    <div class="accordion-group">
+        <div class="accordion-heading">
+            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#stat">
+                Votes
+            </a>
+            <div id="stat" class="accordion-body collapse">
+                <div class="pull-left">
+                    <b>Yae:</b>
+                    <ul class="unstyled">
+                        {% for yae in user.vote_yae %}
+                        <li>[<a href="{% url 'issue_view' id=yae.issue.id %}">#{{yae.issue.id}}</a>]{{yae.issue.title}} - Result: {{yae.issue.vote_result}}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="pull-right">
+                    <b>Nay:</b>
+                    <ul class="unstyled">
+                        {% for nay in user.vote_nay %}
+                        <li>[<a href="{% url 'issue_view' id=nay.issue.id %}">#{{nay.issue.id}}</a>]{{nay.issue.title}} - Result: {{nay.issue.vote_result}}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

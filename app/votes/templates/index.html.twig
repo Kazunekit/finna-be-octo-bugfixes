@@ -1,0 +1,95 @@
+{% extends 'base.html.twig' %}
+{% block content %}
+    <h1>Hello, world creator!</h1>
+    <div class="tabbable">
+        <ul class="nav nav-tabs">
+            <li class="active"><a href="#active" data-toggle="tab">Active</a></li>
+            <li><a href="#voted" data-toggle="tab">Voted</a></li>
+            <li><a href="#over" data-toggle="tab">Finished</a></li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane active" id="active">
+                <div class="accordion" id="accordion">
+                    {% for issue in issues %}
+                    <div class="accordion-group">
+                        <div class="accordion-heading">
+                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#issue{{issue.id}}">
+                                [{{issue.id}}]{{issue.title|truncatechars:25}} ( {{issue.submitted}} - {{issue.ends}} )
+                            </a>
+                            <div id="issue{{issue.id}}" class="accordion-body collapse">
+                                <div class="accordion-inner">
+                                    <h1>{{issue.title}}</h1>
+                                    <h5>{{issue.tldr}}</h5>
+                                    {{issue.content|safe|truncatewords_html:20}}
+                                    <a href="{% url 'issue_view' id=issue.id %}" class="btn btn-primary">View</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="tab-pane" id="voted">
+                <div class="accordion" id="accordion2">
+                    {% for issue in voted %}
+                    <div class="accordion-group">
+                        <div class="accordion-heading">
+                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#voted{{issue.id}}">
+                                [{{issue.id}}]{{issue.title|truncatechars:25}} ( {{issue.submitted}} - {{issue.ends}} )
+                            </a>
+                            <div id="voted{{issue.id}}" class="accordion-body collapse">
+                                <div class="accordion-inner">
+                                    <h1>{{issue.title}}</h1>
+                                    <h5>{{issue.tldr}}</h5>
+                                    {{issue.content|safe|truncatewords_html:20}}
+                                    {% if not issue.is_active %}
+                                        <br/>
+                                        <p><b>Votes:</b> {{ issue.vote_count }}</p>
+                                        <p><b>Yae:</b> {{ issue.vote_yae|length }}</p>
+                                        <p><b>Nay:</b> {{ issue.vote_nay|length }}</p>
+                                        <div class="progress">
+                                            <div class="bar bar-success" style="width:{{issue.vote_percent_yae}}%"></div>
+                                            <div class="bar bar-danger" style="width:{{issue.vote_percent_nay}}%"></div>
+                                        </div>
+                                    {% endif %}
+                                    <a href="{% url 'issue_view' id=issue.id %}" class="btn btn-primary">View</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="tab-pane" id="over">
+                <div class="accordion" id="accordion3">
+                    {% for issue in over %}
+                    <div class="accordion-group">
+                        <div class="accordion-heading">
+                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion3" href="#over{{issue.id}}">
+                                [{{issue.id}}]{{issue.title|truncatechars:25}} ( {{issue.submitted}} - {{issue.ends}} )
+                            </a>
+                            <div id="over{{issue.id}}" class="accordion-body collapse">
+                                <div class="accordion-inner">
+                                    <h1>{{issue.title}}</h1>
+                                    <h5>{{issue.tldr}}</h5>
+                                    {{issue.content|safe|truncatewords_html:20}}
+                                    <br/>
+                                    <p><b>Votes:</b> {{ issue.vote_count }}</p>
+                                    <p><b>Yae:</b> {{ issue.vote_yae|length }}</p>
+                                    <p><b>Nay:</b> {{ issue.vote_nay|length }}</p>
+                                    <div class="progress">
+                                        <div class="bar bar-success" style="width:{{issue.vote_percent_yae}}%"></div>
+                                        <div class="bar bar-danger" style="width:{{issue.vote_percent_nay}}%"></div>
+                                    </div>
+                                    <a href="{% url 'issue_view' id=issue.id %}" class="btn btn-primary">View</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

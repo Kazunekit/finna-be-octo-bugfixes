@@ -6,8 +6,8 @@ from django.conf.urls import patterns, include, url
 
 urlpatterns = patterns('',
     # Examples:
-    # url(r'^$', 'app.views.home', name='home'),
-    # url(r'^app/', include('app.foo.urls')),
+    # url(r'^$', 'voting.views.home', name='home'),
+    url(r'^', include('votes.urls')),
 
     # Uncomment the admin/doc line below to enable admin documentation:
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
@@ -15,3 +15,12 @@ urlpatterns = patterns('',
     # Uncomment the next line to enable the admin:
     # url(r'^admin/', include(admin.site.urls)),
 )
+
+from django.conf import settings
+if settings.DEBUG:    
+	urlpatterns += patterns('', (r'^media\/(?P<path>.*)$',
+									 'django.views.static.serve',
+									 {'document_root': settings.MEDIA_ROOT}),
+							   )
+	from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+	urlpatterns += staticfiles_urlpatterns()
