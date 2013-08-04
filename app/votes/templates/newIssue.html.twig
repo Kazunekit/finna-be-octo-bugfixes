@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+{% load crispy_forms_tags %}
+{% load staticfiles %}
+{% block stylesheets %}
+    {{ block.super }}
+    <link href="{% static 'css/bootstrap-tagmanager.css' %}" rel="stylesheet" media="screen">
+{% endblock %}
+{% block javascripts %}
+    {{ block.super }}
+    <script src="{% static 'js/bootstrap-tagmanager.js' %}"></script>
+    <script src="{% static 'ckeditor/ckeditor.js' %}"></script>
+    <script>
+        $(document).ready(function() {
+            $('#tags_id').tagsManager({
+                hiddenTagListId: 'hidden_tags_id',
+            });
+            CKEDITOR.replace($('#content_id')[0]);
+        });
+    </script>
+{% endblock %}
+{% block content %}
+    {% if form.subject.errors %}
+    <ol>
+        {% for error in form.subject.errors %}
+        <li><strong>{{ error|escape }}</strong></li>
+        {% endfor %}
+    </ol>
+    {% endif %}
+    <form action="{% url 'issue_add' %}" method="post">
+        {% crispy form %}
+    </form>
+{% endblock %}

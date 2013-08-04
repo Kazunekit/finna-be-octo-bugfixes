@@ -1,0 +1,10 @@
+Django>=1.5
+mysql-python
+db-sqlite3
+django-crispy-forms
+django-constance[database]
+django-picklefield
+psycopg2
+uwsgi
+Pillow
+python-memcached

@@ -1,0 +1,7 @@
+body {
+    padding-top: 60px;
+}
+.accordion-body {
+    padding-left: 20px;
+    padding-right: 20px;
+}

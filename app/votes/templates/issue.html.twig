@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+{% load crispy_forms_tags %}
+{% load staticfiles %}
+{% block stylesheets %}
+    {{ block.super }}
+    <link href="{% static 'css/bootstrap-tagmanager.css' %}" rel="stylesheet" media="screen">
+{% endblock %}
+{% block content %}
+    <h1>{{issue.title}}</h1>
+    <h5>{{issue.tldr}}</h5>
+    <br/>
+    {{issue.content|safe}}
+    <br/>
+    <strong>Tags:</strong>
+    {% for tag in issue.tags.all %}
+        <span class="tm-tag tm-tag-info">
+            <span>{{tag.name}}</span>
+        </span>
+    {% endfor %}
+    <br/>
+    {% if not voted and issue.is_active %}
+        <a href="{% url 'issue_vote' id=issue.id %}?vote=Yae" class="btn btn-large btn-success pull-left">Yae</a>
+        <a href="{% url 'issue_vote' id=issue.id %}?vote=Nay" class="btn btn-large btn-danger pull-right">Nay</a>
+    {% endif %}
+    {% if not issue.is_active %}
+        <br/>
+        <p><b>Votes:</b> {{ issue.vote_count }}</p>
+        <p><b>Yae:</b> {{ issue.vote_yae|length }}</p>
+        <p><b>Nay:</b> {{ issue.vote_nay|length }}</p>
+        <div class="progress">
+            <div class="bar bar-success" style="width:{{issue.vote_percent_yae}}%"></div>
+            <div class="bar bar-danger" style="width:{{issue.vote_percent_nay}}%"></div>
+        </div>
+        <div class="pull-left">
+            <h5>Yaesayers:</h5>
+            <ul class="unstyled">
+                {% for vote in issue.vote_yae %}
+                    <li>{{ vote.user.username }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="pull-right">
+            <h5>Naysayers:</h5>
+            <ul class="unstyled">
+                {% for vote in issue.vote_nay %}
+                    <li>{{ vote.user.username }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+{% endblock %}

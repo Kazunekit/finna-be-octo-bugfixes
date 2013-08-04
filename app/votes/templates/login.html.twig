@@ -1,0 +1,16 @@
+{% extends 'loginBase.html.twig' %}
+{% load crispy_forms_tags %}
+{% block content %}
+    <div class="form-signin">
+        {% if form.subject.errors %}
+        <ol>
+            {% for error in form.subject.errors %}
+            <li><strong>{{ error|escape }}</strong></li>
+            {% endfor %}
+        </ol>
+        {% endif %}
+        <form action="{% url 'login' %}" method="post">
+            {% crispy form %}
+        </form>
+    </div>
+{% endblock %}
